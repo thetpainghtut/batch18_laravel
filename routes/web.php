@@ -23,3 +23,10 @@ Route::get('contact', 'MainController@contact')->name('contactpage');
 
 // CRUD Process
 Route::resource('brand', 'BrandController'); // 7 (get, post, put, delete)
+
+Route::resource('category', 'CategoryController'); // 7 
+
+Route::resource('subcategory', 'SubcategoryController'); // 7 
+
+Route::resource('item', 'ItemController'); // 7 
+
