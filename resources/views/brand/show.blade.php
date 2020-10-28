@@ -17,9 +17,9 @@
         <div class="tile">
           <h2>Brand Detail</h2>
 
-          <img src="" class="img-fluid" alt="">
+          <img src="{{asset($brand->photo)}}" class="img-fluid" alt="">
 
-          <p>something</p>
+          <p>{{$brand->name}}</p>
         </div>
       </div>
     </div>

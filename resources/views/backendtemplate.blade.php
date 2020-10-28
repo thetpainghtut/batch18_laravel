@@ -153,5 +153,6 @@
         ga('send', 'pageview');
       }
     </script>
+    @yield('script')
   </body>
 </html>

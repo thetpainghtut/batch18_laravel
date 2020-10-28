@@ -14,7 +14,7 @@ class AddColumnsIntoBrandsTable extends Migration
     public function up()
     {
         Schema::table('brands', function (Blueprint $table) {
-            $table->string('col1');
+            $table->string('col1')->nullable();
             $table->string('col2')->nullable();
         });
     }

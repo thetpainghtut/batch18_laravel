@@ -16,9 +16,9 @@
     <div class="row">
       <div class="col-md-12">
         <div class="tile">
-          <h2>Brand List</h2>
-          <a href="{{route('brand.create')}}" class="btn btn-info">Add New</a>
-          <table class="table">
+          <h2 class="d-inline-block">Brand List</h2>
+          <a href="{{route('brand.create')}}" class="btn btn-info float-right">Add New</a>
+          <table class="table mt-3 table-bordered dataTable">
             <thead>
               <tr>
                 <th>No</th>
@@ -35,8 +35,13 @@
                 <td>{{$i++}}</td>
                 <td>{{$row->name}}</td>
                 <td>
-                  <a href="{{route('brand.edit',1)}}" class="btn btn-warning">Edit</a>
-                  <a href="{{route('brand.show',1)}}" class="btn btn-danger">Show</a>
+                  <a href="{{route('brand.edit',$row->id)}}" class="btn btn-warning">Edit</a>
+                  <a href="{{route('brand.show',$row->id)}}" class="btn btn-info">Show</a>
+                  <form method="post" action="{{route('brand.destroy',$row->id)}}" class="d-inline-block" onsubmit="return confirm('Are you Sure to Delete?')">
+                    @csrf
+                    @method('DELETE')
+                    <input type="submit" name="btnsubmit" value="Delete" class="btn btn-danger">
+                  </form>
                 </td>
               </tr>
               @endforeach
@@ -46,4 +51,12 @@
       </div>
     </div>
   </main>
+@endsection
+
+@section('script')
+  <script type="text/javascript" src="{{asset('backend_asset/js/plugins/jquery.dataTables.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('backend_asset/js/plugins/dataTables.bootstrap.min.js')}}"></script>
+  <script type="text/javascript">
+    $('.dataTable').DataTable();
+  </script>
 @endsection
