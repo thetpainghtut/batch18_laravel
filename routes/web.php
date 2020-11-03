@@ -27,3 +27,7 @@ Route::post('filter', 'ItemController@filterCategory')->name('filterCategory');
 
 // Frontend with items
 Route::get('/', 'FrontendController@home')->name('mainpage');
+
+Auth::routes(); //['register'=>false]
+
+Route::get('/home', 'HomeController@index')->name('home');

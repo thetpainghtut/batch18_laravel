@@ -21,6 +21,19 @@ Database Structure
     1- brands (name, photo)
     4- items (codeno, brand_id, subcategory_id, name, photo, price, discount, description)
 
+  - Authentication
+    - install laravel/ui package
+    - bootstrap --auth
+
+    (install node in your os)
+    - npm install
+    - npm run dev
+    - localhost:8000/login
+
+  - Roles
+    - spatie/laravel-permission package
+    
+
   - user
     - roles
     - users
