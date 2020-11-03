@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
     <!-- Twitter meta-->
     <meta property="twitter:card" content="summary_large_image">
@@ -94,10 +95,10 @@
       </div>
       <ul class="app-menu">
         <li><a class="app-menu__item" href="dashboard.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
-        <li><a class="app-menu__item active" href="{{route('brand.index')}}"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Brands</span></a></li>
-        <li><a class="app-menu__item" href="{{route('brand.index')}}"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Categories</span></a></li>
-        <li><a class="app-menu__item" href="{{route('brand.index')}}"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Subcategories</span></a></li>
-        <li><a class="app-menu__item" href="{{route('brand.index')}}"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Items</span></a></li>
+        <li><a class="app-menu__item {{ Request::is('brand*') ? 'active' : '' }}" href="{{route('brand.index')}}"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Brands</span></a></li>
+        <li><a class="app-menu__item {{ Request::is('category*') ? 'active' : '' }}" href="{{route('category.index')}}"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Categories</span></a></li>
+        <li><a class="app-menu__item {{ Request::is('subcategory*') ? 'active' : '' }}" href="{{route('subcategory.index')}}"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Subcategories</span></a></li>
+        <li><a class="app-menu__item {{ Request::is('item*') ? 'active' : '' }}" href="{{route('item.index')}}"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Items</span></a></li>
       </ul>
     </aside>
     

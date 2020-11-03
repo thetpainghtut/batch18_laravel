@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use Illuminate\Http\Request;
+use App\Brand;
+use App\Category;
+use App\Subcategory;
 
 class ItemController extends Controller
 {
@@ -14,7 +17,8 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        $items = Item::all();
+        return view('item.index',compact('items'));
     }
 
     /**
@@ -24,7 +28,10 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        $brands = Brand::all();
+        $categories = Category::all();
+        $subcategories = Subcategory::all();
+        return view('item.create',compact('brands', 'categories', 'subcategories'));
     }
 
     /**
@@ -35,7 +42,44 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+
+        // Validation
+        $request-> validate([
+            "name" => "required|min:5",
+            "photo" => "required|mimes:jpeg,bmp,png", // a.jpg
+            "price" => "required",
+            "discount" => "sometimes|required",
+            "description" => "required",
+            "brand" => "required",
+            "subcategory" => "required"
+        ]);
+
+        // If include file, upload
+        if($request->file()) {
+            // 624872374523_a.jpg
+            $fileName = time().'_'.$request->photo->getClientOriginalName();
+
+            // brandimg/624872374523_a.jpg
+            $filePath = $request->file('photo')->storeAs('itemimg', $fileName, 'public');
+
+            $path = '/storage/'.$filePath;
+        }
+
+        // store
+        $item = new Item;
+        $item->codeno = uniqid();
+        $item->name = $request->name;
+        $item->photo = $path;
+        $item->price = $request->price;
+        $item->discount = $request->discount;
+        $item->description = $request->description;
+        $item->brand_id = $request->brand;
+        $item->subcategory_id = $request->subcategory;
+        $item->save();
+
+        // redirect
+        return redirect()->route('item.index');
     }
 
     /**
@@ -46,7 +90,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        //
+        return view('item.show',compact('item'));
     }
 
     /**
@@ -57,7 +101,10 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        //
+        $brands = Brand::all();
+        $categories = Category::all();
+        $subcategories = Subcategory::all();
+        return view('item.edit',compact('item', 'brands', 'categories', 'subcategories'));
     }
 
     /**
@@ -69,7 +116,44 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        //
+        // dd($request);
+
+        // Validation
+        $request-> validate([
+            "name" => "required|min:5",
+            "photo" => "sometimes|required|mimes:jpeg,bmp,png", // a.jpg
+            "price" => "required",
+            "discount" => "sometimes|required",
+            "description" => "required",
+            "brand" => "required",
+            "subcategory" => "required"
+        ]);
+
+        // If include file, upload
+        if($request->file()) {
+            // 624872374523_a.jpg
+            $fileName = time().'_'.$request->photo->getClientOriginalName();
+
+            // brandimg/624872374523_a.jpg
+            $filePath = $request->file('photo')->storeAs('itemimg', $fileName, 'public');
+
+            $path = '/storage/'.$filePath;
+        }else{
+            $path = $request->oldphoto;
+        }
+
+        // store
+        $item->name = $request->name;
+        $item->photo = $path;
+        $item->price = $request->price;
+        $item->discount = $request->discount;
+        $item->description = $request->description;
+        $item->brand_id = $request->brand;
+        $item->subcategory_id = $request->subcategory;
+        $item->save();
+
+        // redirect
+        return redirect()->route('item.index');
     }
 
     /**
@@ -81,5 +165,12 @@ class ItemController extends Controller
     public function destroy(Item $item)
     {
         //
+    }
+
+    public function filterCategory(Request $request)
+    {
+        $cid = $request->cid;
+        $subcategories = Subcategory::where('category_id',$cid)->get();
+        return $subcategories;
     }
 }

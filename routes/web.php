@@ -12,21 +12,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// using frontend_asset (ui)
+// Route::get('/', 'MainController@welcome')->name('homepage');
+// Route::get('testing', 'MainController@testing')->name('testingpage');
+// Route::get('about', 'MainController@about')->name('aboutpage');
+// Route::get('contact', 'MainController@contact')->name('contactpage');
 
-Route::get('/', 'MainController@welcome')->name('homepage');
-
-Route::get('testing', 'MainController@testing')->name('testingpage');
-
-Route::get('about', 'MainController@about')->name('aboutpage');
-
-Route::get('contact', 'MainController@contact')->name('contactpage');
-
-// CRUD Process
+// CRUD Process (Item Management)
 Route::resource('brand', 'BrandController'); // 7 (get, post, put, delete)
-
 Route::resource('category', 'CategoryController'); // 7 
-
 Route::resource('subcategory', 'SubcategoryController'); // 7 
-
 Route::resource('item', 'ItemController'); // 7 
+Route::post('filter', 'ItemController@filterCategory')->name('filterCategory');
 
+// Frontend with items
+Route::get('/', 'FrontendController@home')->name('mainpage');
