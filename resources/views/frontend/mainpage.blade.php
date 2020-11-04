@@ -7,29 +7,7 @@
 
       <div class="col-lg-3">
 
-        <div class="accordion mt-4" id="accordionExample">
-          @php $i=1; @endphp
-          @foreach($categories as $category)
-          <div class="card">
-            <div class="card-header" id="headingOne">
-              <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne{{$i}}" aria-expanded="true" aria-controls="collapseOne{{$i}}">
-                  {{$category->name}}
-                </button>
-              </h2>
-            </div>
-
-            <div id="collapseOne{{$i}}" class="collapse @if($loop->first) {{'show'}} @endif" aria-labelledby="headingOne" data-parent="#accordionExample">
-              <div class="card-body">
-                @foreach($category->subcategories as $subcategory)
-                <a class="btn btn-link" href="#">{{$subcategory->name}}</a>
-                @endforeach
-              </div>
-            </div>
-          </div>
-          @php $i++; @endphp
-          @endforeach
-        </div>
+        <x-sidebar-component></x-sidebar-component>
 
       </div>
       <!-- /.col-lg-3 -->
@@ -65,21 +43,7 @@
 
         <div class="row">
           @foreach($items as $item)
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="{{asset($item->photo)}}" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">{{$item->name}}</a>
-                </h4>
-                <h5>{{$item->price}} MMK</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-              </div>
-              <div class="card-footer">
-                <a href="{{route('itemdetail',$item->id)}}" class="btn btn-info">Detail</a>
-              </div>
-            </div>
-          </div>
+            <x-item-component :item="$item"></x-item-component>
           @endforeach
         </div>
         <!-- /.row -->
@@ -91,4 +55,24 @@
     <!-- /.row -->
 
   </div>
+@endsection
+
+@section('script')
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+      $('.subcategory').click(function (e) {
+        e.preventDefault();
+        let subcategory_id = $(this).data('id');
+        $.post("{{route('bysubcategory')}}",{id:subcategory_id},function (response) {
+          console.log(response);
+        })
+      })
+    })
+  </script>
 @endsection

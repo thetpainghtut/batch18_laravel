@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -35,7 +35,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Cart</a>
+            <a class="nav-link" href="{{route('cartpage')}}">Cart</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{route('signinpage')}}">Signin</a>
