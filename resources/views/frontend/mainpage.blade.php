@@ -7,11 +7,28 @@
 
       <div class="col-lg-3">
 
-        <h1 class="my-4">Shop Name</h1>
-        <div class="list-group">
-          <a href="#" class="list-group-item">Category 1</a>
-          <a href="#" class="list-group-item">Category 2</a>
-          <a href="#" class="list-group-item">Category 3</a>
+        <div class="accordion mt-4" id="accordionExample">
+          @php $i=1; @endphp
+          @foreach($categories as $category)
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne{{$i}}" aria-expanded="true" aria-controls="collapseOne{{$i}}">
+                  {{$category->name}}
+                </button>
+              </h2>
+            </div>
+
+            <div id="collapseOne{{$i}}" class="collapse @if($loop->first) {{'show'}} @endif" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                @foreach($category->subcategories as $subcategory)
+                <a class="btn btn-link" href="#">{{$subcategory->name}}</a>
+                @endforeach
+              </div>
+            </div>
+          </div>
+          @php $i++; @endphp
+          @endforeach
         </div>
 
       </div>
@@ -59,7 +76,7 @@
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
               </div>
               <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <a href="{{route('itemdetail',$item->id)}}" class="btn btn-info">Detail</a>
               </div>
             </div>
           </div>
