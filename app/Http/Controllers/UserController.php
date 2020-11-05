@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -36,7 +37,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // dd
+        // dd($request)
 
         // validation
         $request->validate([
@@ -54,6 +55,9 @@ class UserController extends Controller
 
         // assign user as customer
         $user->assignRole('customer');
+
+        // login
+        Auth::login($user);
 
         // redirect
         return redirect()->route('mainpage');

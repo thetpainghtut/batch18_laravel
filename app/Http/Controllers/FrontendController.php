@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Item;
 use App\Subcategory;
+use App\Brand;
 
 class FrontendController extends Controller
 {
   public function home($value='')
   {
     $items = Item::take(2)->get();
-    return view('frontend.mainpage',compact('items'));
+    $brands = Brand::all();
+    return view('frontend.mainpage',compact('items','brands'));
   }
 
   public function itemdetail($id)

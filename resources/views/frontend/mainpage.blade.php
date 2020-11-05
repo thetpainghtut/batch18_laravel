@@ -40,19 +40,37 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
-
-        <div class="row">
-          @foreach($items as $item)
-            <x-item-component :item="$item"></x-item-component>
-          @endforeach
-        </div>
-        <!-- /.row -->
-
       </div>
       <!-- /.col-lg-9 -->
 
     </div>
     <!-- /.row -->
+
+
+    {{-- Show items --}}
+    <div class="row">
+      <div class="col-md-12">
+        <p>ပရိုမိုးရှင်းနောက်ဆုံးနေ့ပစ္စည်းမျာ</p>
+      </div>
+      @foreach($items as $item)
+        <x-item-component :item="$item"></x-item-component>
+      @endforeach
+    </div>
+    <!-- /.row -->
+
+    {{-- Show Brands --}}
+    <div class="row">
+      <div class="col-md-12">
+        <p>ရရှိနိုင်သည့်အမှတ်တံဆိပ်များ</p>
+      </div>
+      @foreach($brands as $brand)
+      <div class="col-md-2 my-4">
+        <img src="{{asset($brand->photo)}}" alt="" class="img-fluid">
+      </div>
+      @endforeach
+    </div>
+
+    {{--  --}}
 
   </div>
 @endsection

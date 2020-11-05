@@ -18,12 +18,14 @@ use Illuminate\Support\Facades\Route;
 // Route::get('about', 'MainController@about')->name('aboutpage');
 // Route::get('contact', 'MainController@contact')->name('contactpage');
 
-// CRUD Process (Item Management)
-Route::resource('brand', 'BrandController'); // 7 (get, post, put, delete)
-Route::resource('category', 'CategoryController'); // 7 
-Route::resource('subcategory', 'SubcategoryController'); // 7 
-Route::resource('item', 'ItemController'); // 7 
-Route::post('filter', 'ItemController@filterCategory')->name('filterCategory');
+Route::middleware('role:admin')->group(function () {
+  // CRUD Process (Item Management)
+  Route::resource('brand', 'BrandController'); // 7 (get, post, put, delete)
+  Route::resource('category', 'CategoryController'); // 7 
+  Route::resource('subcategory', 'SubcategoryController'); // 7 
+  Route::resource('item', 'ItemController'); // 7 
+  Route::post('filter', 'ItemController@filterCategory')->name('filterCategory');
+});
 
 // Frontend with items
 Route::get('/', 'FrontendController@home')->name('mainpage');
@@ -36,6 +38,8 @@ Route::get('itemsbysubcategory/{id}', 'FrontendController@itemsbysubcategory')->
 Route::post('bysubcategory', 'FrontendController@bysubcategory')->name('bysubcategory');
 
 Route::get('cart', 'FrontendController@cart')->name('cartpage');
+
+Route::resource('order', 'OrderController');
 
 Route::get('signin', 'FrontendController@signin')->name('signinpage');
 Route::get('signup', 'FrontendController@signup')->name('signuppage');
