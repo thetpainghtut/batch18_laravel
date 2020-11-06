@@ -6,14 +6,42 @@
     <div class="row my-5">
       <h2>Shopping Cart!</h2>
       {{-- id, name, photo, price, qty --}}
-      <table class=""></table>
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>No</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+      </table>
 
-      <textarea class="form-control notes"></textarea>
-      @role('customer')
-        <button class="btn btn-success checkout">Checkout</button>
-      @else
-        <button class="btn btn-success">Sign in Checkout</button>
-      @endrole
+      {{-- <form method="" action="" class="checkoutform"> --}}
+      <form method="post" action="{{route('order.store')}}">
+        @csrf
+
+        <textarea class="form-control notes" placeholder="Notes.." required></textarea>
+        <input type="hidden" name="ls" value="">
+        <div class="mt-4">
+          <a href="#" class="btn btn-info">Continue Shopping</a>
+          <div class="d-inline-block ml-auto">
+            {{-- 
+            // using ajax
+
+            @role('customer')
+              <button class="btn btn-success" type="submit">Checkout</button>
+            @else
+              <a class="btn btn-success" href="{{route('signinpage')}}">Sign in to Checkout</a>
+            @endrole --}}
+
+            <button class="btn btn-success" type="submit">Checkout</button>
+          </div>
+          
+        </div>
+      </form>
+      
     </div>
     <!-- /.row -->
 
@@ -25,18 +53,25 @@
 
     <script type="text/javascript">
       $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
       });
       
       $(document).ready(function () {
-        $('.checkout').click(function () {
+        $('.checkoutform').submit(function(e){
           let notes = $('.notes').val();
-          let order = localStorage.getItem('cart'); // JSON String
-          $.post("{{route('order.store')}}",{order:order,notes:notes},function (response) {
-            console.log(response.msg);
-          })
+          if (notes === "") {
+            return true;
+          }else{
+            let order = localStorage.getItem('cart'); // JSON String
+            $.post("{{route('order.store')}}",{order:order,notes:notes},function (response) {
+              alert(response.msg);
+              localStorage.clear();
+              location.href="/";
+            })
+            e.preventDefault();
+          }
         })
       })
     </script>

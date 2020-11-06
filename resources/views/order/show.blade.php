@@ -15,25 +15,51 @@
     <div class="row">
       <div class="col-md-12">
         <div class="tile">
-          <h2>Item Detail</h2>
+          <h2>Order Detail</h2>
 
-          <div class="card my-3">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="{{asset($item->photo)}}" class="card-img" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">{{$item->name}} ({{$item->codeno}})</h5>
-                  <p class="card-text">{{number_format($item->price)}} MMK</p>
-                  <p class="card-text">{{$item->brand->name}}</p>
-                  <p class="card-text">{{$item->subcategory->name}}</p>
+          <p>Orderno: {{$order->orderno}}</p>
+          <p>Orderdate: {{$order->orderdate}}</p>
+          <p>Customer: {{$order->user->name}}</p>
 
-                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <table class="table table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th>No</th>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              @php $i=1; $total=0; @endphp
+              @foreach($order->items as $item)
+              <tr>
+                <td>{{$i++}}</td>
+                <td>{{$item->name}}</td>
+                <td>{{$item->price}}</td>
+                <td>{{$item->pivot->quantity}}</td>
+                <td>{{$item->price * $item->pivot->quantity}}</td>
+              </tr>
+              @php $total+= $item->price * $item->pivot->quantity; @endphp
+              @endforeach
+
+              <tr>
+                <td colspan="4">Total</td>
+                <td>{{$total}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          @if($order->status == 0)
+          <form method="post" action="{{route('order.confirm',$order->id)}}">
+            @csrf
+            <button class="btn btn-info" type="submit">Confirm</button>
+          </form>
+
+          @elseif($order->status == 1)
+            <button class="btn btn-success">Success Order</button>
+          @endif
         </div>
       </div>
     </div>

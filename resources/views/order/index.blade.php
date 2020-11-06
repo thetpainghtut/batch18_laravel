@@ -18,6 +18,26 @@
         <div class="tile">
           <h2 class="d-inline-block">Order List</h2>
           
+          <form method="" action="" class="my-3">
+            <div class="form-row">
+              <div class="col-md-4">
+                <label for="fromDate">From</label>
+                <input type="date" name="from" class="form-control" id="fromDate">
+              </div>
+
+              <div class="col-md-4">
+                <label for="toDate">To</label>
+                <input type="date" name="to" class="form-control" id="toDate">
+              </div>
+
+              <div class="col-md-4">
+                <label></label>
+                <input type="submit" name="btnsubmit" value="Search" class="btn btn-primary mt-4">
+              </div>
+              
+            </div>
+          </form>
+
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
               <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Pending</a>
@@ -53,7 +73,7 @@
                     <td>{{number_format($row->totalamount)}}</td>
                     <td>{{$row->user->name}}</td>
                     <td>
-                      <a href="#" class="btn btn-primary">Confirm</a>
+                      <a href="{{route('order.show',$row->id)}}" class="btn btn-primary">Detail</a>
                       <a href="#" class="btn btn-danger">Cancle</a>
 
                     </td>

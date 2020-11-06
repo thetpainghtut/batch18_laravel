@@ -41,6 +41,8 @@ Route::get('cart', 'FrontendController@cart')->name('cartpage');
 
 Route::resource('order', 'OrderController');
 
+Route::post('confirm/{id}', 'OrderController@confirm')->name('order.confirm');
+
 Route::get('signin', 'FrontendController@signin')->name('signinpage');
 Route::get('signup', 'FrontendController@signup')->name('signuppage');
 
