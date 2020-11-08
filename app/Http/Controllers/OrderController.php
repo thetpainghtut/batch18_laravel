@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use Illuminate\Http\Request;
 use Auth;
+Use Alert;
 
 class OrderController extends Controller
 {
@@ -69,6 +70,8 @@ class OrderController extends Controller
         foreach ($myorder as $row) { 
             $order->items()->attach($row->id,['quantity'=>$row->qty]);
         }
+
+        Alert::success(Auth::user()->name, 'Order Successfully Completed!');
 
         // ajax response
         // return response()
