@@ -42,7 +42,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
 
         // validation
 
@@ -70,8 +70,12 @@ class OrderController extends Controller
             $order->items()->attach($row->id,['quantity'=>$row->qty]);
         }
 
-        return response()
-            ->json(['msg' => 'Successful You Order!']);
+        // ajax response
+        // return response()
+        //     ->json(['msg' => 'Successful You Order!']);
+
+        // form response
+        return redirect()->route('mainpage');
     }
 
     /**

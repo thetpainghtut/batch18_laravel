@@ -6,6 +6,7 @@
     <div class="row my-5">
       <h2>Shopping Cart!</h2>
       {{-- id, name, photo, price, qty --}}
+
       <table class="table table-bordered">
         <thead class="thead-dark">
           <tr>
@@ -18,29 +19,36 @@
         </thead>
       </table>
 
-      {{-- <form method="" action="" class="checkoutform"> --}}
+      {{-- Using Form --}}
       <form method="post" action="{{route('order.store')}}">
         @csrf
-
-        <textarea class="form-control notes" placeholder="Notes.." required></textarea>
-        <input type="hidden" name="ls" value="">
+        <textarea class="form-control" placeholder="Notes.." name="notes" required></textarea>
+        <input type="hidden" name="order" value="" id="ls">
         <div class="mt-4">
           <a href="#" class="btn btn-info">Continue Shopping</a>
           <div class="d-inline-block ml-auto">
-            {{-- 
-            // using ajax
+            <button class="btn btn-success" type="submit">Checkout</button>
+          </div>
+        </div>
+      </form>
 
+
+      {{-- 
+      // Using Ajax
+      <form method="" action="" class="checkoutform">
+        @csrf
+        <textarea class="form-control notes" placeholder="Notes.." required></textarea>
+        <div class="mt-4">
+          <a href="#" class="btn btn-info">Continue Shopping</a>
+          <div class="d-inline-block ml-auto">
             @role('customer')
               <button class="btn btn-success" type="submit">Checkout</button>
             @else
               <a class="btn btn-success" href="{{route('signinpage')}}">Sign in to Checkout</a>
-            @endrole --}}
-
-            <button class="btn btn-success" type="submit">Checkout</button>
+            @endrole
           </div>
-          
         </div>
-      </form>
+      </form> --}}
       
     </div>
     <!-- /.row -->
@@ -59,20 +67,24 @@
       });
       
       $(document).ready(function () {
-        $('.checkoutform').submit(function(e){
-          let notes = $('.notes').val();
-          if (notes === "") {
-            return true;
-          }else{
-            let order = localStorage.getItem('cart'); // JSON String
-            $.post("{{route('order.store')}}",{order:order,notes:notes},function (response) {
-              alert(response.msg);
-              localStorage.clear();
-              location.href="/";
-            })
-            e.preventDefault();
-          }
-        })
+        // Usin Ajax
+        // $('.checkoutform').submit(function(e){
+        //   let notes = $('.notes').val();
+        //   if (notes === "") {
+        //     return true;
+        //   }else{
+        //     let order = localStorage.getItem('cart'); // JSON String
+        //     $.post("{{route('order.store')}}",{order:order,notes:notes},function (response) {
+        //       alert(response.msg);
+        //       localStorage.clear();
+        //       location.href="/";
+        //     })
+        //     e.preventDefault();
+        //   }
+        // })
+
+        // Using Form
+        $('#ls').val(localStorage.getItem('cart'));
       })
     </script>
 @endsection
