@@ -42,6 +42,8 @@ class LoginController extends Controller
     {
         $roles = auth()->user()->getRoleNames();
 
+        // dd($roles);
+
         // Check user role
         switch ($roles[0]) {
             case 'admin':
