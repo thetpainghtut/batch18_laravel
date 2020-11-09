@@ -66,6 +66,13 @@ Project
   - Database
 13-11-2020 (flow presentation)
 
-
-
-
+Git Clone
+--------
+  - git clone url
+  - cd folder
+  - composer install
+  - change .env.example into .env
+  - php artisan key:generate
+  - config your database
+  - php artisan migrate
+  - php artisan db:seed

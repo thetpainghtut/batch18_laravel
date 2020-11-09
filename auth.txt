@@ -1,0 +1,18 @@
+Auth
+----
+  - Register
+  - login
+  - guest / auth
+
+Eg
+--
+  - guest
+  - customer
+  - shop
+  - admin
+
+- users (login)
+  (name, email, password, address, phoneno)
+
+- shop
+  (time, township, type, usesr_id)
